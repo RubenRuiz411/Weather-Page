@@ -1,0 +1,25 @@
+h1 {
+	text-align: center;
+}
+label {
+	font-weight: bold;
+
+}
+
+.card {
+	margin: 5px;
+}
+
+
+.histBtnRow {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.icons {
+	height: 70px;
+	width: 70px;
+}
+.cardTodayDate {
+	font-size: 20px;
+}
