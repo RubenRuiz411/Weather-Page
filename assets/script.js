@@ -9,7 +9,7 @@ var domFiveDayForecast = $(".fivedayForecast");
 var weatherCardcurrent = $(".weatherCard");
 
 // listener for serach button which will push search item to local storage and run other functions
-function enter() {$(".btn").on("click", function (event) {
+$(".btn").on("click", function (event) {
   event.preventDefault();
   city = $(this).parent(".cityButton").siblings(".textValue").val();
     if (city === "") {
@@ -20,7 +20,7 @@ function enter() {$(".btn").on("click", function (event) {
   domFiveDayForecast.empty();
   findHistory();
   todaysWeather();
-});}
+});
 
 
 
