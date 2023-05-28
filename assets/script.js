@@ -1,3 +1,4 @@
+// global var's
 var weatherKey = "a560e43cae463b6f70d60b91f8248d5b";
 var city = "Los Angeles";
 var todaysDate = dayjs().format("dddd, MMMM, D YYYY");
@@ -5,11 +6,13 @@ var dateandTime = dayjs().format("hh:m A");
 var actualHistoryEl = $(".actualSearchhistory");
 var searchHistory = [];
 var domFiveDayForecast = $(".fivedayForecast");
+var weatherCardcurrent = $(".weatherCard");
 
-$(".btn").on("click", function (event) {
+// listener for serach button which will push search item to local storage and run other functions
+function enter() {$(".btn").on("click", function (event) {
   event.preventDefault();
   city = $(this).parent(".cityButton").siblings(".textValue").val();
-  if (city === "") {
+    if (city === "") {
     return;
   }
   searchHistory.push(city);
@@ -17,8 +20,12 @@ $(".btn").on("click", function (event) {
   domFiveDayForecast.empty();
   findHistory();
   todaysWeather();
-});
+});}
 
+
+
+
+// function generates buttons in history container with city history from local storage and search then 
 function findHistory() {
   actualHistoryEl.empty();
   for (let i = 0; i < searchHistory.length; i++) {
@@ -41,8 +48,11 @@ function findHistory() {
   });
 }
 
-var weatherCardcurrent = $(".weatherCard");
 
+
+
+
+// function generates the current weather by calling the API then populates that data on the dom
 function todaysWeather() {
   var URLforToday = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherKey}&units=imperial`;
   $(weatherCardcurrent).empty();
@@ -64,15 +74,15 @@ function todaysWeather() {
     weatherCardcurrent.append(pElHumid);
     var pElWind = $("<p>").text(`Wind Speed: ${response.wind.speed} MPH`);
     weatherCardcurrent.append(pElWind);
-
     fivedayForecast();
   });
 
-  function fivedayForecast() {
-    URLfiveday = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${weatherKey}&units=imperial`;
-    $.ajax({
-      url: URLfiveday,
-      method: "GET",
+// function generates the 5day forecast by calling the API then genreating that data on the dom using a loop
+function fivedayForecast() {
+  URLfiveday = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${weatherKey}&units=imperial`;
+   $.ajax({
+    url: URLfiveday,
+    method: "GET",
     }).then(function (response) {
       var fivedayForecastArray = response.list;
       var weatherforday = [];
@@ -96,21 +106,20 @@ function todaysWeather() {
         divCard.attr("style", "max-width: 200px");
         var divHeader = $("<div>");
         divHeader.attr("class", "card-header");
-
         divCard.append(divHeader);
+        var headerDate = dayjs(`${weatherforday[i].date}`).format('MM-DD-YYYY');
+        divHeader.append(headerDate);
         var divIcon = $("<img>");
         var divBody = $("<div>");
         divIcon.attr("class", "icons");
         divIcon.attr(
           "src",
-          `https://openweathermap.org/img/wn/${weatherforday[i].icon}@2x.png`
-        );
+          `https://openweathermap.org/img/wn/${weatherforday[i].icon}@2x.png`);
         divBody.append(divIcon);
         var tempEl = $("<p>").text(`Temperature: ${weatherforday[i].temp} °F`);
         divBody.append(tempEl);
         var feelEl = $("<p>").text(
-          `Feels Like: ${weatherforday[i].feels_like} °F`
-        );
+          `Feels Like: ${weatherforday[i].feels_like} °F`);
         divBody.append(feelEl);
         var humidEl = $("<p>").text(`Humidity: ${weatherforday[i].humidity} %`);
         divBody.append(humidEl);
@@ -121,9 +130,9 @@ function todaysWeather() {
   }
 }
 
+//function first finds previous searches saved in local storage then runs other functions
 function initLoad() {
   var cityHistory = JSON.parse(localStorage.getItem("city"));
-
   if (cityHistory !== null) {
     searchHistory = cityHistory;
   }
@@ -131,4 +140,5 @@ function initLoad() {
   todaysWeather();
 }
 
+// function runs when page loads
 initLoad();
