@@ -1,25 +1,27 @@
+/* align header center/bold */
 h1 {
 	text-align: center;
+	font-weight: bold;
 }
+
+/* bold letters for label */
 label {
 	font-weight: bold;
-
 }
 
+/* card/5day forecast spacing */
 .card {
 	margin: 5px;
 }
 
-
-.histBtnRow {
+/* for search history button spacing */
+.domSearchHistory {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
+/* icon size  */
 .icons {
 	height: 70px;
 	width: 70px;
-}
-.cardTodayDate {
-	font-size: 20px;
 }
