@@ -2,7 +2,7 @@
 
 ## Description
 
-Work Day Scheduler
+Weather-Page
 
 - What was your motivation?
 
